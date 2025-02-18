@@ -5,6 +5,7 @@ public class BallController : MonoBehaviour
 {
     [SerializeField] private float force = 25f;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private Transform ballAnchor;
 
     private Rigidbody ballRB;
     private bool isBallLaunched;
@@ -14,7 +15,9 @@ public class BallController : MonoBehaviour
     void Start()
     {
         ballRB = GetComponent<Rigidbody>();
-        inputManager.OnSpacePressed.AddListener(LaunchBall);
+        transform.parent = ballAnchor; // Attach ball to anchor initially
+        transform.localPosition = Vector3.zero; // Reset ball position
+        ballRB.isKinematic = true; // Disable physics until launch
     }
 
     private void LaunchBall()
